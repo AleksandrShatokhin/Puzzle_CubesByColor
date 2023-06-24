@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ButtonCheckController : MainGameController
+public class ButtonCheck : MonoBehaviour
 {
+    [SerializeField] private int finalyResult;
     [SerializeField] private Image lightIndicator;
 
     public void CheckGrid(GameObject listChips)
     {
-        if (GetResultSumChips(listChips) == resultSumChips)
+        if (GetResultPositionCells(listChips) == finalyResult)
         {
             OutputMessageToPlayerOnIndikator(true);
         }
@@ -31,7 +32,7 @@ public class ButtonCheckController : MainGameController
         }
     }
 
-    private float GetResultSumChips(GameObject listChips)
+    private float GetResultPositionCells(GameObject listChips)
     {
         List<GameObject> allRedChips = new List<GameObject>();
         List<GameObject> allGreenChips = new List<GameObject>();
@@ -39,28 +40,28 @@ public class ButtonCheckController : MainGameController
 
         foreach (Transform go in listChips.transform)
         {
-            if (go.GetComponent<CellController>().GetCurrentStateText() == state_Red)
+            if (go.GetComponent<ITransmittable>().GetCurrentState() == StateCell.Red)
                 allRedChips.Add(go.gameObject);
 
-            if (go.GetComponent<CellController>().GetCurrentStateText() == state_Green)
+            if (go.GetComponent<ITransmittable>().GetCurrentState() == StateCell.Green)
                 allGreenChips.Add(go.gameObject);
 
-            if (go.GetComponent<CellController>().GetCurrentStateText() == state_Yellow)
+            if (go.GetComponent<ITransmittable>().GetCurrentState() == StateCell.Yellow)
                 allYellowChips.Add(go.gameObject);
         }
 
         int result_Red = 0, result_Green = 0, result_Yellow = 0;
 
         foreach (GameObject go in allYellowChips)
-            if (go.GetComponent<CellController>().GetPoint_J() == 0)
+            if (go.GetComponent<ITransmittable>().GetPoint_J() == 0)
                 result_Yellow++;
 
         foreach (GameObject go in allGreenChips)
-            if (go.GetComponent<CellController>().GetPoint_J() == 2)
+            if (go.GetComponent<ITransmittable>().GetPoint_J() == 2)
                 result_Green++;
 
         foreach (GameObject go in allRedChips)
-            if (go.GetComponent<CellController>().GetPoint_J() == 4)
+            if (go.GetComponent<ITransmittable>().GetPoint_J() == 4)
                 result_Red++;
 
         float sum = result_Red + result_Green + result_Yellow;
@@ -70,7 +71,6 @@ public class ButtonCheckController : MainGameController
         return sum;
     }
 
-    // циклична€ карутина дл€ мерцани€ индикатора
     private IEnumerator ColorBlink(Color color, float delayBlink = 0.3f)
     {
         Color defaultColor = lightIndicator.color;

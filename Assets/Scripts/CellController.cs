@@ -1,17 +1,26 @@
 using UnityEngine;
+using UnityEngine.UI;
 
-public class CellController : MainGameController
+public class CellController : MonoBehaviour, IWritable, ITransmittable
 {
-    [SerializeField] private string currentStateText;
-    public string GetCurrentStateText() => currentStateText;
+    [SerializeField] private StateCell currentState;
+    StateCell ITransmittable.GetCurrentState() => currentState;
 
 
     [SerializeField] private int point_i, point_j;
-    public int GetPoint_I() => point_i;
-    public int GetPoint_J() => point_j;
+    int ITransmittable.GetPoint_I() => point_i;
+    int ITransmittable.GetPoint_J() => point_j;
 
-    public void SetParameters(string state) => currentStateText = state;
-    public void SetParameters(int point_i, int point_j)
+
+    void IWritable.SetStartedParameters(Color color, StateCell state, int i, int j)
+    {
+        this.GetComponent<Image>().color = color;
+        this.currentState = state;
+        this.point_i = i;
+        this.point_j = j;
+    }
+
+    void IWritable.SetUpdatedCoordinates(int point_i, int point_j)
     {
         this.point_i = point_i;
         this.point_j = point_j;
@@ -19,44 +28,46 @@ public class CellController : MainGameController
 
     public void MouseClick()
     {
-        if (this.currentStateText == state_Block)
+        if (this.currentState == StateCell.Block)
         {
             return;
         }
 
-        SwapPlacesChip();
+        SwapPlacesChips();
     }
 
-    private void SwapPlacesChip()
+    private void SwapPlacesChips()
     {
         if (SelectedCell.IsCurrentSelectedCell())
         {
-            ActionFirstPressMouse();
+            ActionFirstClick();
         }
         else
         {
-            ActionSecondPressMouse();
+            ActionSecondClick();
         }
     }
 
-    private void ActionFirstPressMouse()
+    private void ActionFirstClick()
     {
-        if (this.currentStateText != state_Empty)
+        if (this.currentState == StateCell.Empty)
         {
-            SelectedCell.SetCurrentSelectedCell(this.gameObject);
+            return;
         }
+
+        SelectedCell.SetCurrentSelectedCell(this.gameObject);
     }
 
-    private void ActionSecondPressMouse()
+    private void ActionSecondClick()
     {
-        if (IsClickFreeCell() && this.currentStateText == state_Empty && this.currentStateText != state_Block)
+        if (IsCellAdjacent() && this.currentState == StateCell.Empty && this.currentState != StateCell.Block)
         {
             Vector3 valuePosition = SelectedCell.currentSelectedCell.transform.position;
 
-            int valuePoint_i = SelectedCell.currentSelectedCell.GetComponent<CellController>().GetPoint_I();
-            int valuePoint_j = SelectedCell.currentSelectedCell.GetComponent<CellController>().GetPoint_J();
+            int valuePoint_i = SelectedCell.currentSelectedCell.GetComponent<ITransmittable>().GetPoint_I();
+            int valuePoint_j = SelectedCell.currentSelectedCell.GetComponent<ITransmittable>().GetPoint_J();
 
-            SelectedCell.currentSelectedCell.GetComponent<CellController>().SetParameters(this.point_i, this.point_j);
+            SelectedCell.currentSelectedCell.GetComponent<IWritable>().SetUpdatedCoordinates(this.point_i, this.point_j);
             this.point_i = valuePoint_i;
             this.point_j = valuePoint_j;
 
@@ -70,10 +81,10 @@ public class CellController : MainGameController
         }
     }
 
-    private bool IsClickFreeCell()
+    private bool IsCellAdjacent()
     {
-        int selectPoint_i = SelectedCell.currentSelectedCell.GetComponent<CellController>().GetPoint_I();
-        int selectPoint_j = SelectedCell.currentSelectedCell.GetComponent<CellController>().GetPoint_J();
+        int selectPoint_i = SelectedCell.currentSelectedCell.GetComponent<ITransmittable>().GetPoint_I();
+        int selectPoint_j = SelectedCell.currentSelectedCell.GetComponent<ITransmittable>().GetPoint_J();
 
         if (selectPoint_i - this.point_i == 1 && selectPoint_j == this.point_j || this.point_i - selectPoint_i == 1 && selectPoint_j == this.point_j ||
             selectPoint_i == this.point_i && selectPoint_j - this.point_j == 1 || selectPoint_i == this.point_i && this.point_j - selectPoint_j == 1)

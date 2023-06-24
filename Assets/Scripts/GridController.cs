@@ -1,9 +1,7 @@
 using UnityEngine;
 
-public class GridController : MainGameController
+public class GridController : MainGridController
 {
-    [SerializeField] private GameObject cell_Prefab;
-
     private void Start()
     {
         CreateGridCells();
@@ -13,22 +11,15 @@ public class GridController : MainGameController
     {
         gridCells = new GameObject[n, n];
         float resetPosition_X = startPosition_X;
-        Transform gridSellsPosInHierarchy = this.gameObject.transform.GetChild(1).gameObject.transform.GetChild(1);
 
         for (int i = 0; i < n; i++)
         {
             for (int j = 0; j < n; j++)
             {
-                // создаем €чейку
-                CreateCell(i, j, cell_Prefab, gridSellsPosInHierarchy);
+                CreateCell(i, j);
                 startPosition_X += offset;
-
-                // задаю статусы состо€ний в соответствии с цветами фишек
-                FillChipsColumn(i, j);
-
-                // устанавливаем блоки на определенных €чейках
-                SetBlockToCells(i, j);
             }
+
             startPosition_Y -= offset;
             startPosition_X = resetPosition_X;
         }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -516,6 +516,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
   m_HorizontalAxis: Horizontal
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit
@@ -1402,6 +1403,113 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 718459968}
   m_CullTransparentMesh: 1
+--- !u!1 &750348602
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 750348604}
+  - component: {fileID: 750348603}
+  m_Layer: 0
+  m_Name: Parameters
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &750348603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 750348602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8b0fb43ccb65884cb7f157c681639d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RedParameter1:
+    i: 1
+    j: 0
+  RedParameter2:
+    i: 4
+    j: 0
+  RedParameter3:
+    i: 2
+    j: 2
+  RedParameter4:
+    i: 4
+    j: 2
+  RedParameter5:
+    i: 2
+    j: 4
+  GreenParameter1:
+    i: 0
+    j: 0
+  GreenParameter2:
+    i: 3
+    j: 0
+  GreenParameter3:
+    i: 3
+    j: 2
+  GreenParameter4:
+    i: 0
+    j: 4
+  GreenParameter5:
+    i: 1
+    j: 4
+  YellowParameter1:
+    i: 2
+    j: 0
+  YellowParameter2:
+    i: 0
+    j: 2
+  YellowParameter3:
+    i: 1
+    j: 2
+  YellowParameter4:
+    i: 3
+    j: 4
+  YellowParameter5:
+    i: 4
+    j: 4
+  BlockParameter1:
+    i: 0
+    j: 1
+  BlockParameter2:
+    i: 0
+    j: 3
+  BlockParameter3:
+    i: 2
+    j: 1
+  BlockParameter4:
+    i: 2
+    j: 3
+  BlockParameter5:
+    i: 4
+    j: 1
+  BlockParameter6:
+    i: 4
+    j: 3
+--- !u!4 &750348604
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 750348602}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 908.3029, y: 535.96985, z: 3.2561793}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &756990907
 GameObject:
   m_ObjectHideFlags: 0
@@ -3143,7 +3251,7 @@ GameObject:
   - component: {fileID: 1897280877}
   - component: {fileID: 1897280880}
   m_Layer: 5
-  m_Name: Button_Ckeck
+  m_Name: Button_Check
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3275,6 +3383,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2860181c43cc6b479845488230ff0a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  finalyResult: 15
   lightIndicator: {fileID: 652340837}
 --- !u!1 &1937340990
 GameObject:
@@ -3392,6 +3501,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cell_Prefab: {fileID: 1575135515484711921, guid: 7db0f879b5fee654b81ad30388ba10b5, type: 3}
+  positionInHierarhy: {fileID: 1980194498}
+  parametersComponent: {fileID: 750348603}
 --- !u!1 &1980194497
 GameObject:
   m_ObjectHideFlags: 0
